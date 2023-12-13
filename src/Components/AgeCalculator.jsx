@@ -69,13 +69,31 @@ export default function AgeCalculator({ setAge, result }) {
     const birthYear = parseInt(currentYear);
     const birthMonth = parseInt(currentMonth);
     const birthDay = parseInt(currentDay);
-
+  
     // Tarih kontrolü: Geçmiş tarih girilemez
     if (isNaN(birthYear) || isNaN(birthMonth) || isNaN(birthDay)) {
       setError("Please enter valid birth date");
       return;
     }
-
+  
+    // Gün, ay ve yıl kontrolü
+    if (birthDay < 1 || birthDay > 31) {
+      setError("Please enter a valid day (1-31)");
+      return;
+    }
+  
+    if (birthMonth < 1 || birthMonth > 12) {
+      setError("Please enter a valid month (1-12)");
+      return;
+    }
+  
+    const currentYearValue = new Date().getFullYear(); // Değişiklik burada
+    if (birthYear < 1900 || birthYear > currentYearValue) {
+      setError(`Please enter a valid year (1900-${currentYearValue})`);
+      return;
+    }
+  
+    // If all checks pass, proceed with calculations
     calculateAgeDetails();
     setError(null);
   };
@@ -94,11 +112,9 @@ export default function AgeCalculator({ setAge, result }) {
         </button>
       </div>
       <div className="result">
-        {result.years && (
-          <h3>
-            {result.years} years {result.months} months {result.days} days
-          </h3>
-        )}
+        <h3>{result.years || "--"} YEARS</h3>
+        <h3>{result.months || "--"} MONTHS</h3>
+        <h3>{result.days || "--"} DAYS</h3>
       </div>
     </div>
   );
