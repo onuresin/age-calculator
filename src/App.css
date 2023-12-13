@@ -82,14 +82,16 @@ input[type="number"]::-webkit-outer-spin-button {
 .line {
     width: 112px;
 }
-.result {
-    & h3 {
-        font-size: 52px;
-        font-style: italic;
-        font-weight: 800;
-        line-height: 110%; /* 61.6px */
-        letter-spacing: -1.12px; 
-    }
+.result h3 {
+    color: #151515;
+    font-size: 52px;
+    font-style: italic;
+    font-weight: 800;
+    line-height: 110%; /* 61.6px */
+    letter-spacing: -1.12px;
+}
+.result h3::before {
+    color: #854DFF;
 }
 
 @media (min-width: 700px) {
@@ -119,7 +121,8 @@ input[type="number"]::-webkit-outer-spin-button {
             font-size: 20px;
             font-weight: 700;
             line-height: normal;
-            letter-spacing: 0.2px; 
+            letter-spacing: 0.2px;
+            cursor: url('/public/pointer-hand.svg'), auto;
         }
     }
     .result {

@@ -118,13 +118,13 @@ export default function AgeCalculator({ setAge, result }) {
           <img className="line" src="line.svg" alt="line-gray"/>
           <img className="hover-btn" onMouseOver={() => setIsMouseOver(true)} onMouseOut={() => setIsMouseOver(false)} onClick={handleCalculate} src={isMouseOver ? "black-button.svg" : "purple-button.svg"} alt="click-button"/>
           <img className="line" src="line.svg" alt="line-gray"/>
-          <img className="line-2" src="long-line.svg" alt="line-gray"/>
+          <img className="line-2" src="line.svg" alt="line-gray"/>
           <img className="hover-btn-2" onMouseOver={() => setIsMouseOver(true)} onMouseOut={() => setIsMouseOver(false)} onClick={handleCalculate} src={isMouseOver ? "black-button.svg" : "purple-button.svg"} alt="click-button"/>
         </div>
         <div className="result">
-          <h3>{result.years || "--"} YEARS</h3>
-          <h3>{result.months || "--"} MONTHS</h3>
-          <h3>{result.days || "--"} DAYS</h3>
+          <h3 style={{ color: '#854DFF' }}>{result.years || "--"} <span style={{ color: '#151515' }}>YEARS</span></h3>
+          <h3 style={{ color: '#854DFF' }}>{result.months || "--"} <span style={{ color: '#151515' }}>MONTHS</span></h3>
+          <h3 style={{ color: '#854DFF' }}>{result.days || "--"} <span style={{ color: '#151515' }}>DAYS</span></h3>
         </div>
       </div>
    </div>
