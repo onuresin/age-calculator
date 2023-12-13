@@ -118,7 +118,7 @@ export default function AgeCalculator({ setAge, result }) {
           <img className="line" src="line.svg" alt="line-gray"/>
           <img className="hover-btn" onMouseOver={() => setIsMouseOver(true)} onMouseOut={() => setIsMouseOver(false)} onClick={handleCalculate} src={isMouseOver ? "black-button.svg" : "purple-button.svg"} alt="click-button"/>
           <img className="line" src="line.svg" alt="line-gray"/>
-          <img className="line-2" src="line.svg" alt="line-gray"/>
+          <img className="line-2" src="long-line.svg" alt="line-gray"/>
           <img className="hover-btn-2" onMouseOver={() => setIsMouseOver(true)} onMouseOut={() => setIsMouseOver(false)} onClick={handleCalculate} src={isMouseOver ? "black-button.svg" : "purple-button.svg"} alt="click-button"/>
         </div>
         <div className="result">
