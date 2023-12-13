@@ -5,13 +5,13 @@ export default function AgeCalculator({ setAge, result }) {
   const [currentMonth, setCurrentMonth] = useState("");
   const [currentYear, setCurrentYear] = useState("");
   const [error, setError] = useState(null);
+  const [isMouseOver, setIsMouseOver] = useState(false);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
 
     switch (name) {
       case "day":
-        // Gün kontrolü: 1 ile 31 arasında olmalı
         if (value < 1 || value > 31) {
           setError("Please enter a valid day (1-31)");
           return;
@@ -19,7 +19,6 @@ export default function AgeCalculator({ setAge, result }) {
         setCurrentDay(value);
         break;
       case "month":
-        // Ay kontrolü: 1 ile 12 arasında olmalı
         if (value < 1 || value > 12) {
           setError("Please enter a valid month (1-12)");
           return;
@@ -27,7 +26,6 @@ export default function AgeCalculator({ setAge, result }) {
         setCurrentMonth(value);
         break;
       case "year":
-        // Yıl kontrolü: Belirli bir sınır koyabilirsiniz (örneğin, 2023'e kadar)
         const currentYear = new Date().getFullYear();
         if (value < 1900 || value > currentYear) {
           setError(`Please enter a valid year (1900-${currentYear})`);
@@ -35,10 +33,10 @@ export default function AgeCalculator({ setAge, result }) {
         }
         setCurrentYear(value);
         break;
-      default:
+        default:
         break;
     }
-    // Hata olmadığında hatayı sıfırla
+
     setError(null);
   };
 
@@ -70,52 +68,63 @@ export default function AgeCalculator({ setAge, result }) {
     const birthMonth = parseInt(currentMonth);
     const birthDay = parseInt(currentDay);
   
-    // Tarih kontrolü: Geçmiş tarih girilemez
     if (isNaN(birthYear) || isNaN(birthMonth) || isNaN(birthDay)) {
       setError("Please enter valid birth date");
       return;
     }
   
-    // Gün, ay ve yıl kontrolü
     if (birthDay < 1 || birthDay > 31) {
-      setError("Please enter a valid day (1-31)");
+      setError("Must be a valid day");
       return;
     }
   
     if (birthMonth < 1 || birthMonth > 12) {
-      setError("Please enter a valid month (1-12)");
+      setError("Must be a valid month (1-12)");
       return;
     }
   
-    const currentYearValue = new Date().getFullYear(); // Değişiklik burada
+    const currentYearValue = new Date().getFullYear();
     if (birthYear < 1900 || birthYear > currentYearValue) {
-      setError(`Please enter a valid year (1900-${currentYearValue})`);
+      setError(`Must be in the past (1900-${currentYearValue})`);
       return;
     }
   
-    // If all checks pass, proceed with calculations
+// bütün kontroller gerçekleşip onaylandıktan sonra hesaplama gerçekleşir
     calculateAgeDetails();
     setError(null);
   };
 
   return (
-    <div className="calculator-age">
-      <div className="set-ddmmyy">
-        <input type="number" name="day" placeholder="DD" onChange={handleChange} />
-        <input type="number" name="month" placeholder="MM" onChange={handleChange} />
-        <input type="number" name="year" placeholder="YYYY" onChange={handleChange} />
-        {error && <p style={{ color: "red" }}>{error}</p>}
+   <div className="container">
+      <div className="calculator-age">
+        <div className="set-ddmmyy">
+          <span className="dd">
+          <h4 style={{ color: error && error.includes("valid day") ? "#FF5959" : "" }}>DAY</h4>
+            <input type="number" name="day" placeholder="DD" onChange={handleChange} />
+            {error && error.includes("valid day") && <p style={{ color: "red" }}>{error}</p>}
+          </span>
+          <span className="mm">
+          <h4 style={{ color: error && error.includes("valid month") ? "#FF5959" : "" }}>MONTH</h4>
+            <input type="number" name="month" placeholder="MM" onChange={handleChange} />
+            {error && error.includes("valid month") && <p style={{ color: "red" }}>{error}</p>}
+          </span>
+          <span className="yyyy">
+          <h4 style={{ color: error && error.includes("valid year") ? "#FF5959" : "" }}>YEAR</h4>
+            <input type="number" name="year" placeholder="YYYY" onChange={handleChange} />
+            {error && error.includes("valid year") && <p style={{ color: "red" }}>{error}</p>}
+          </span>
+        </div>
+        <div className="calculate-b-section">
+          <img src="line.svg" alt="line-gray"/>
+          <img onMouseOver={() => setIsMouseOver(true)} onMouseOut={() => setIsMouseOver(false)} onClick={handleCalculate} src={isMouseOver ? "black-button.svg" : "purple-button.svg"} alt="click-button"/>
+          <img src="line.svg" alt="line-gray"/>
+        </div>
+        <div className="result">
+          <h3>{result.years || "--"} YEARS</h3>
+          <h3>{result.months || "--"} MONTHS</h3>
+          <h3>{result.days || "--"} DAYS</h3>
+        </div>
       </div>
-      <div className="calculate-b-section">
-        <button onClick={handleCalculate}>
-          <img src="purple-button.svg" alt="click-button" />
-        </button>
-      </div>
-      <div className="result">
-        <h3>{result.years || "--"} YEARS</h3>
-        <h3>{result.months || "--"} MONTHS</h3>
-        <h3>{result.days || "--"} DAYS</h3>
-      </div>
-    </div>
+   </div>
   );
 }
