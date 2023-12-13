@@ -1,68 +1,105 @@
-export default function AgeCalculator(props) {
-    const [age, setAge] = useState(0);
-    const [error, setError] = useState(null);
+import React, { useState } from "react";
 
-    const handleChange = (event) => {
-        const value = event.target.value;
-        const name = event.target.name;
-    }
+export default function AgeCalculator({ setAge, result }) {
+  const [currentDay, setCurrentDay] = useState("");
+  const [currentMonth, setCurrentMonth] = useState("");
+  const [currentYear, setCurrentYear] = useState("");
+  const [error, setError] = useState(null);
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+
     switch (name) {
-        case "day":
-            if(value.length > 31) {
-                setError("Please enter a valid day value")
-            } else {
-                setError(null);
-            }
-            break;
-            case "month":
-                if (value.lenght > 12) {
-                    setError("Please enter a valid month value")
-                } else {
-                    setError(null);
-                }
-                break;
-            case "year":
-                if (value.lenght !== 4) {
-                    setError("Please enter a valid year value")
-                } else {
-                    setError(null);
-                }
-                break;
+      case "day":
+        // Gün kontrolü: 1 ile 31 arasında olmalı
+        if (value < 1 || value > 31) {
+          setError("Please enter a valid day (1-31)");
+          return;
+        }
+        setCurrentDay(value);
+        break;
+      case "month":
+        // Ay kontrolü: 1 ile 12 arasında olmalı
+        if (value < 1 || value > 12) {
+          setError("Please enter a valid month (1-12)");
+          return;
+        }
+        setCurrentMonth(value);
+        break;
+      case "year":
+        // Yıl kontrolü: Belirli bir sınır koyabilirsiniz (örneğin, 2023'e kadar)
+        const currentYear = new Date().getFullYear();
+        if (value < 1900 || value > currentYear) {
+          setError(`Please enter a valid year (1900-${currentYear})`);
+          return;
+        }
+        setCurrentYear(value);
+        break;
+      default:
+        break;
     }
-};
+    // Hata olmadığında hatayı sıfırla
+    setError(null);
+  };
 
-const handleCalculate = () => {
-    // Bu değişkenler tek tek kullanıcının girdiği verileri kullanmak için verildi
-   const birthYear = parseInt(props.year);
-   const birthMonth = parseInt(props.month);
-   const birthDay = parseInt(props.day);
+  const calculateAgeDetails = () => {
+    const birthYear = parseInt(currentYear);
+    const birthMonth = parseInt(currentMonth);
+    const birthDay = parseInt(currentDay);
 
-   const today = new Date () ;   // bugünün tarihini alır ve değiştirir
+    const today = new Date();
+    const birthDate = new Date(birthYear, birthMonth - 1, birthDay);
 
-   // hesaplamak için aşağıda ki değişkeni kullanırız
+    const ageInMilliseconds = today - birthDate;
 
-   const age = today.getFullYear() - birthYear;
+    const years = Math.floor(ageInMilliseconds / (365.25 * 24 * 60 * 60 * 1000));
+    const birthDatePlusYears = new Date(birthDate);
+    birthDatePlusYears.setFullYear(birthDatePlusYears.getFullYear() + years);
 
-   props.setAge(age);
+    const months = Math.floor((today - birthDatePlusYears) / (30.44 * 24 * 60 * 60 * 1000));
+    const birthDatePlusMonths = new Date(birthDatePlusYears);
+    birthDatePlusMonths.setMonth(birthDatePlusMonths.getMonth() + months);
 
-   setError(null);
-}
+    const days = Math.floor((today - birthDatePlusMonths) / (24 * 60 * 60 * 1000));
 
-return (
+    setAge({ years, months, days });
+  };
+
+  const handleCalculate = () => {
+    const birthYear = parseInt(currentYear);
+    const birthMonth = parseInt(currentMonth);
+    const birthDay = parseInt(currentDay);
+
+    // Tarih kontrolü: Geçmiş tarih girilemez
+    if (isNaN(birthYear) || isNaN(birthMonth) || isNaN(birthDay)) {
+      setError("Please enter valid birth date");
+      return;
+    }
+
+    calculateAgeDetails();
+    setError(null);
+  };
+
+  return (
     <div className="calculator-age">
-        <div className="set-ddmmyy">
-            <input type="number" placeholder="DD" onChange={handleChange} />
-            <input type="number" placeholder="MM" onChange={handleChange} />
-            <input type="number" placeholder="YYYY" onChange={handleChange}/>
-            {error && <p style={{color: "red" }} >{error}</p>}
-        </div>
-        <div className="calculate-b-section">
-            <button onClick={handleCalculate}><img src="purple-button.svg" alt="click-button" /></button>
-        </div>
-        <div className="result">
-            <h3>{age} YEAR</h3>
-            <h4>{age / 12 } MONTH</h4>
-            <h5>{age % 12} DAY</h5>
-        </div>
+      <div className="set-ddmmyy">
+        <input type="number" name="day" placeholder="DD" onChange={handleChange} />
+        <input type="number" name="month" placeholder="MM" onChange={handleChange} />
+        <input type="number" name="year" placeholder="YYYY" onChange={handleChange} />
+        {error && <p style={{ color: "red" }}>{error}</p>}
+      </div>
+      <div className="calculate-b-section">
+        <button onClick={handleCalculate}>
+          <img src="purple-button.svg" alt="click-button" />
+        </button>
+      </div>
+      <div className="result">
+        {result.years && (
+          <h3>
+            {result.years} years {result.months} months {result.days} days
+          </h3>
+        )}
+      </div>
     </div>
-)
+  );
+}
