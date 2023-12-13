@@ -13,14 +13,14 @@ export default function AgeCalculator({ setAge, result }) {
     switch (name) {
       case "day":
         if (value < 1 || value > 31) {
-          setError("Please enter a valid day (1-31)");
+          setError("Must be a valid day");
           return;
         }
         setCurrentDay(value);
         break;
       case "month":
         if (value < 1 || value > 12) {
-          setError("Please enter a valid month (1-12)");
+          setError("Must be a valid month");
           return;
         }
         setCurrentMonth(value);
@@ -101,23 +101,25 @@ export default function AgeCalculator({ setAge, result }) {
           <span className="dd">
           <h4 style={{ color: error && error.includes("valid day") ? "#FF5959" : "" }}>DAY</h4>
             <input type="number" name="day" placeholder="DD" onChange={handleChange} />
-            {error && error.includes("valid day") && <p style={{ color: "red" }}>{error}</p>}
+            {error && error.includes("valid day") && <h6 style={{ color: "red" }}>{error}</h6>}
           </span>
           <span className="mm">
           <h4 style={{ color: error && error.includes("valid month") ? "#FF5959" : "" }}>MONTH</h4>
             <input type="number" name="month" placeholder="MM" onChange={handleChange} />
-            {error && error.includes("valid month") && <p style={{ color: "red" }}>{error}</p>}
+            {error && error.includes("valid month") && <h6 style={{ color: "red" }}>{error}</h6>}
           </span>
           <span className="yyyy">
           <h4 style={{ color: error && error.includes("valid year") ? "#FF5959" : "" }}>YEAR</h4>
             <input type="number" name="year" placeholder="YYYY" onChange={handleChange} />
-            {error && error.includes("valid year") && <p style={{ color: "red" }}>{error}</p>}
+            {error && error.includes("valid year") && <h6 style={{ color: "red" }}>{error}</h6>}
           </span>
         </div>
         <div className="calculate-b-section">
           <img className="line" src="line.svg" alt="line-gray"/>
-          <img clas onMouseOver={() => setIsMouseOver(true)} onMouseOut={() => setIsMouseOver(false)} onClick={handleCalculate} src={isMouseOver ? "black-button.svg" : "purple-button.svg"} alt="click-button"/>
+          <img className="hover-btn" onMouseOver={() => setIsMouseOver(true)} onMouseOut={() => setIsMouseOver(false)} onClick={handleCalculate} src={isMouseOver ? "black-button.svg" : "purple-button.svg"} alt="click-button"/>
           <img className="line" src="line.svg" alt="line-gray"/>
+          <img className="line-2" src="long-line.svg" alt="line-gray"/>
+          <img className="hover-btn-2" onMouseOver={() => setIsMouseOver(true)} onMouseOut={() => setIsMouseOver(false)} onClick={handleCalculate} src={isMouseOver ? "black-button.svg" : "purple-button.svg"} alt="click-button"/>
         </div>
         <div className="result">
           <h3>{result.years || "--"} YEARS</h3>

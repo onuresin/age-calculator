@@ -4,8 +4,10 @@
     box-sizing: border-box;
 }
 body {
+    margin-top: 15px;
     font-family: 'Poppins', sans-serif;
     background-color: #716F6F;
+    cursor: url('/public/pointer-hand.svg'), auto;
 }
 
 /* placeholder içinde okların görünmemesi için*/
@@ -46,11 +48,11 @@ input[type="number"]::-webkit-outer-spin-button {
         line-height: normal;
         letter-spacing: 3px;
     }
-    & p {
-        font-size: 14px;
-        font-style: italic;
-        font-weight: 400;
+    & h6 {
         color: #FF5959;
+        font-size: 9px;
+        font-weight: 400; 
+
     }
     & input {
         width: 87px;
@@ -62,11 +64,15 @@ input[type="number"]::-webkit-outer-spin-button {
         line-height: normal;
         letter-spacing: 0.2px; 
     }
+    & input:hover {
+        border: 1px solid #854DFF;
+    }
 }
 .calculate-b-section {
     display: flex;
     justify-content: center;
 }
+.line-2, .hover-btn-2 { display: none;}
 .hover-btn {
     width: 64px;
     height: 64px; 
@@ -83,5 +89,53 @@ input[type="number"]::-webkit-outer-spin-button {
         font-weight: 800;
         line-height: 110%; /* 61.6px */
         letter-spacing: -1.12px; 
+    }
+}
+
+@media (min-width: 700px) {
+    .container {
+        width: 840px;
+    }
+    .calculator-age {
+        padding: 56px;
+    }
+    .set-ddmmyy {
+        gap: 32px;
+    }
+    .dd, .mm, .yyyy {
+        & h4 {
+            font-size: 14px;
+            letter-spacing: 3.5px;
+        }
+        & h6 {
+            font-size: 14px;
+            font-weight: 400;
+        }
+        & input {
+            width: 160px;
+            padding: 12px 24px;
+            border-radius: 8px;
+            border: 1px solid #dcdcdc;
+            font-size: 20px;
+            font-weight: 700;
+            line-height: normal;
+            letter-spacing: 0.2px; 
+        }
+    }
+    .result {
+        & h3 {
+            font-size: 104px;
+            font-style: italic;
+            font-weight: 800;
+            line-height: 110%; /* 114.4px */
+            letter-spacing: -2.08px; 
+        }
+    }
+    .line-2{
+        display: block;
+    }
+    .line, .hover-btn {display: none;}
+    .hover-btn-2{
+        display: block;
     }
 }
