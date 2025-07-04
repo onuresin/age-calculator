@@ -7,26 +7,24 @@ body {
     margin-top: 15px;
     font-family: 'Poppins', sans-serif;
     background-color: #716F6F;
-    cursor: url('/public/pointer-hand.svg'), auto;
+    cursor: url('assets/pointer-hand.svg'), auto;
 }
 
-/* placeholder içinde okların görünmemesi için*/
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-
 @-moz-document url-prefix() {
     input[type="number"] {
       -moz-appearance: textfield;
     }
 }
 
-/* Mobile */
 .container {
     margin: 0 auto;
-    width: 343px;
+    width: 100%;
+    max-width: 343px;
     background-color: #fff;
     border-radius: 24px 24px 100px 24px;
 }
@@ -40,34 +38,32 @@ input[type="number"]::-webkit-outer-spin-button {
     display: flex;
     gap: 16px;
 }
-.dd, .mm, .yyyy {
-    & h4 {
-        color: #716F6F;
-        font-size: 12px;
-        font-weight: 700;
-        line-height: normal;
-        letter-spacing: 3px;
-    }
-    & h6 {
-        color: #FF5959;
-        font-size: 9px;
-        font-weight: 400; 
-
-    }
-    & input {
-        width: 87px;
-        padding: 12px 16px;
-        border-radius: 8px;
-        border: 1px solid #dcdcdc;
-        font-size: 20px;
-        font-weight: 700;
-        line-height: normal;
-        letter-spacing: 0.2px; 
-    }
-    & input:hover {
-        border: 1px solid #854DFF;
-    }
+.dd h4, .mm h4, .yyyy h4 {
+    color: #716F6F;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: 3px;
 }
+.dd h6, .mm h6, .yyyy h6 {
+    color: #FF5959;
+    font-size: 9px;
+    font-weight: 400;
+}
+.dd input, .mm input, .yyyy input {
+    width: 87px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 1px solid #dcdcdc;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: 0.2px;
+}
+.dd input:hover, .mm input:hover, .yyyy input:hover {
+    border: 1px solid #854DFF;
+}
+
 .calculate-b-section {
     display: flex;
     justify-content: center;
@@ -76,7 +72,7 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .hover-btn {
     width: 64px;
-    height: 64px; 
+    height: 64px;
     border: none;
     cursor: pointer;
 }
@@ -88,7 +84,7 @@ input[type="number"]::-webkit-outer-spin-button {
     font-size: 52px;
     font-style: italic;
     font-weight: 800;
-    line-height: 110%; /* 61.6px */
+    line-height: 110%;
     letter-spacing: -1.12px;
 }
 .result h3::before {
@@ -97,49 +93,72 @@ input[type="number"]::-webkit-outer-spin-button {
 
 @media (min-width: 700px) {
     .container {
-        width: 840px;
+        max-width: 840px;
+        width: 100%;
+        margin: 40px auto;
+        border-radius: 24px 24px 180px 24px;
     }
     .calculator-age {
-        padding: 56px;
+        padding: 56px 80px;
     }
     .set-ddmmyy {
         gap: 32px;
+        justify-content: flex-start;
     }
     .dd, .mm, .yyyy {
-        & h4 {
-            font-size: 14px;
-            letter-spacing: 3.5px;
-        }
-        & h6 {
-            font-size: 14px;
-            font-weight: 400;
-        }
-        & input {
-            width: 160px;
-            padding: 12px 24px;
-            border-radius: 8px;
-            border: 1px solid #dcdcdc;
-            font-size: 20px;
-            font-weight: 700;
-            line-height: normal;
-            letter-spacing: 0.2px;
-            cursor: url('/public/pointer-hand.svg'), auto;
-        }
+        display: flex;
+        flex-direction: column;
+        flex: 1 1 0;
+    }
+    .dd h4, .mm h4, .yyyy h4 {
+        font-size: 14px;
+        letter-spacing: 3.5px;
+        text-align: left;
+    }
+    .dd h6, .mm h6, .yyyy h6 {
+        font-size: 14px;
+        font-weight: 400;
+        text-align: left;
+    }
+    .dd input, .mm input, .yyyy input {
+        width: 100%;
+        min-width: 0;
+        max-width: 200px;
+        padding: 12px 24px;
+        border-radius: 8px;
+        border: 1px solid #dcdcdc;
+        font-size: 20px;
+        font-weight: 700;
+        line-height: normal;
+        letter-spacing: 0.2px;
+        cursor: url('assets/pointer-hand.svg'), auto;
+        margin-bottom: 4px;
     }
     .result {
-        & h3 {
-            font-size: 104px;
-            font-style: italic;
-            font-weight: 800;
-            line-height: 110%; /* 114.4px */
-            letter-spacing: -2.08px; 
-        }
+        margin-top: 30px;
     }
-    .line-2{
+    .result h3 {
+        font-size: 104px;
+        font-style: italic;
+        font-weight: 800;
+        line-height: 110%;
+        letter-spacing: -2.08px;
+        text-align: left;
+    }
+    .line-2 {
         display: block;
     }
-    .line, .hover-btn {display: none;}
-    .hover-btn-2{
+    .line, .hover-btn {
+        display: none;
+    }
+    .hover-btn-2 {
         display: block;
+        width: 100px;
+        height: 100px;
+        margin: 0 32px;
+    }
+    .calculate-b-section {
+        justify-content: center;
+        align-items: center;
     }
 }
