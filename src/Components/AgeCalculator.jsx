@@ -89,7 +89,6 @@ export default function AgeCalculator({ setAge, result }) {
       return;
     }
   
-// bütün kontroller gerçekleşip onaylandıktan sonra hesaplama gerçekleşir
     calculateAgeDetails();
     setError(null);
   };
